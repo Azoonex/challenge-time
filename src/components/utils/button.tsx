@@ -2,12 +2,14 @@ import React from "react"
 
 function Button({
     children,
+    style,
     ...props
 }:{
-    children:React.ReactNode
+    children:React.ReactNode,
+    style? : string,
 }) {
   return (
-      <button {...props} className="bg-zinc-800 rounded-md p-3 text-white hover:bg-zinc-700">
+      <button {...props} className={`${style} " rounded-md p-3 bg-zinc-800 text-white  hover:bg-zinc-700`}>
          {children}
       </button>
   )

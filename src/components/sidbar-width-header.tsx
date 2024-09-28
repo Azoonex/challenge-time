@@ -6,9 +6,7 @@ function SidbarWidthHeader() {
         <div className="text-white">
             You Porject
         </div>
-        <Button>
-          add project +
-        </Button>
+        
     </aside>
   )
 }
