@@ -7,7 +7,7 @@ function Button({
     children:React.ReactNode
 }) {
   return (
-      <button {...props} className="bg-zinc-800 text-sm rounded-md px-3 py-1 ">
+      <button {...props} className="bg-zinc-800 rounded-md p-3 text-white hover:bg-zinc-700">
          {children}
       </button>
   )

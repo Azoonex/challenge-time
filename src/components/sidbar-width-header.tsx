@@ -1,11 +1,14 @@
+import Button from "./utils/button"
 
 function SidbarWidthHeader() {
   return (
-    <aside>
+    <aside className="flex flex-col gap-3">
         <div className="text-white">
             You Porject
         </div>
-        <
+        <Button>
+          add project +
+        </Button>
     </aside>
   )
 }
