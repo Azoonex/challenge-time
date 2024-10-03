@@ -11,20 +11,25 @@ function Container(props: TypePropsContainer) {
 
   const { handleAddNewProject } = props
 
-  const nameInput = useRef(null);
-  const comment = useRef(null);
-  const descreiption = useRef(null);
+  const nameInput = useRef < null | HTMLInputElement > (null);
+  const comment = useRef < null | HTMLInputElement > (null);
+  const descreiption = useRef < null | HTMLInputElement > (null);
 
   function hanldeSubmit(e:
     React.FormEvent<HTMLInputElement>
   ) {
     e.preventDefault()
-    handleAddNewProject({
-      comment : comment.current.value,
-      des : descreiption.current.value,
-      id : new Date(),
-      name : nameInput.current.value
-    })
+    if (nameInput.current.value.length > 0) {
+      handleAddNewProject({
+        comment: comment.current.value,
+        des: descreiption.current.value,
+        id: new Date(),
+        name: nameInput.current.value
+      })
+    }
+    nameInput.current.value = "";
+    comment.current.value = "";
+    descreiption.current.value = ""
   }
 
   return (
