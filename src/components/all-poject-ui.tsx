@@ -21,9 +21,6 @@ function AllPojectUi(props) {
         )
     }
 
-
-
-
     return (
         <div className="flex flex-col gap-4">
             <ul className="my-4 flex flex-col gap-8 list-decimal text-white">
@@ -34,10 +31,9 @@ function AllPojectUi(props) {
                             <Button onClick={() => removeProject(i.id)}>
                                 Remove
                             </Button>
-                        </li>)
+                        </li>
+                    )
                 }
-
-
             </ul>
         </div>
     )
