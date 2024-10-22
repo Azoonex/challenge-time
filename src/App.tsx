@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import SidbarWidthHeader from "./components/sidbar-width-header"
 import Button from "./components/utils/button";
 import Container from "./components/container";
@@ -11,16 +11,22 @@ export interface typeNewProject {
   des: string;
 }
 
+
 interface typeAll {
   addproject?: typeNewProject;
   allPoject: typeNewProject[];
 }
+
+
+
 function App() {
-  const [project, setPorject] = useState < typeAll > ({
+
+  const [project, setPorject] = useState<typeAll>({
     addproject: undefined,
     allPoject: []
   });
-  const [isAddProject,setIsProject] = useState(false)
+  const [chooseProject, setChooseProject] = useState()
+  const [selectProject, setSelectedProject] = useState()
 
   function handleAddProject() {
     setPorject(prevState => {
@@ -41,19 +47,33 @@ function App() {
     })
   }
 
+  const changeChooseProject = useCallback(() => {
+    if (chooseProject) setSelectedProject(project.allPoject.find(item => item.id === chooseProject))
+  }, [chooseProject])
+
+  useEffect(() => {
+    changeChooseProject()
+    console.log("getPject" + JSON.stringify(selectProject))
+  }, [chooseProject, selectProject])
+
 
   return (
     <section className="grid grid-cols-6 h-screen">
       <div className="col-span-2 size-full rounded-r-xl bg-zinc-900 p-3 flex-col-3">
         <SidbarWidthHeader handleAddProject={handleAddProject} />
-        <AllPojectUi projects={project} setPorject={setPorject}  />
+        <AllPojectUi setChooseProject={setChooseProject} projects={project} setPorject={setPorject} />
       </div>
       <div className="col-span-4 flex items-center justify-center">
-        {!project.addproject ? <div className="text-red-500 font-bold ">You Takse Project it Empty !
-          <Button style="ml-3" onClick={handleAddProject}>
-            add project +
-          </Button>
-        </div> : <Container  handleAddNewProject={handleAddNewProject} />}
+        {!project.addproject ?
+          <div className="text-red-500 font-bold ">You Takse Project it Empty !
+            <Button style="ml-3" onClick={handleAddProject}>
+              add project +
+            </Button>
+          </div>
+
+          : selectProject ? <div>
+            {selectProject?.name}
+          </div> : <Container handleAddNewProject={handleAddNewProject} />}
 
       </div>
     </section>

@@ -3,13 +3,9 @@ import { typeNewProject } from "../App"
 import Button from "./utils/button"
 
 function AllPojectUi(props) {
-    let allCheckBox = [1, 2, 3]
-    const [checkBox, setCheckBox] = useState < number[] > ([])
 
-    const { projects, setPorject } = props
-    useEffect(() => {
-        console.log(projects)
-    }, [projects])
+    const { projects, setPorject, setChooseProject } = props
+
 
     function removeProject(id: number) {
         setPorject(prev => {
@@ -27,7 +23,9 @@ function AllPojectUi(props) {
                 {
                     projects.allPoject && projects.allPoject.length > 0 && projects.allPoject.map((i, index) =>
                         <li className=" text-xs flex gap-3 items-center justify-between">
-                            {i.name.toUpperCase()}
+                            <span onClick={() => setChooseProject(i.id)} className="px-3 py-2 bg-red-500 rounded-lg">
+                                {i.name.toUpperCase()}
+                            </span>
                             <Button onClick={() => removeProject(i.id)}>
                                 Remove
                             </Button>
