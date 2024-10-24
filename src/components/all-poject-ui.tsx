@@ -1,5 +1,3 @@
-import { useEffect, useState } from "react"
-import { typeNewProject } from "../App"
 import Button from "./utils/button"
 
 function AllPojectUi(props) {

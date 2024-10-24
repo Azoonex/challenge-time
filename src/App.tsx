@@ -21,7 +21,7 @@ interface typeAll {
 
 function App() {
 
-  const [project, setPorject] = useState<typeAll>({
+  const [project, setPorject] = useState < typeAll > ({
     addproject: undefined,
     allPoject: []
   });
@@ -53,8 +53,20 @@ function App() {
 
   useEffect(() => {
     changeChooseProject()
-    console.log("getPject" + JSON.stringify(selectProject))
   }, [chooseProject, selectProject])
+
+  useEffect(() => {
+    if (project.allPoject.length === 0) {
+      setSelectedProject((prev) => {
+        if (prev) prev.name = ""
+      })
+
+    } else {
+      console.log('this is full')
+    }
+  }, [chooseProject, project])
+
+
 
 
   return (
