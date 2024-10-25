@@ -1,8 +1,12 @@
-import React from 'react'
+import Body from './components/body'
+import Navbar from './components/nvbar'
 
 function App() {
   return (
-    <div>App</div>
+    <div>
+      <Navbar />
+      <Body />
+    </div>
   )
 }
 
