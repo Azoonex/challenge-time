@@ -1,100 +1,45 @@
-import { useEffect, useRef, useState } from "react";
-import Body from "./components/body";
-import Navbar from "./components/nvbar";
-import QuastionTimer from "./components/quastionTimer";
+import { useEffect, useState } from "react"
 
-function App() {
-    // radio
+const myArray = ['name', 'age', 'items', 'content']
 
-    const [currentRadioValue, setCurrentRadioValue] = useState();
-    const [inputCheckboxValue, setInCheckBoxValue] = useState < number[] | null > ([]);
+export default function App() {
 
-    const handleRadioChange = (e) => {
-        if (e.target.value === currentRadioValue) {
-            console.log(
-                "yese",
-                "e.target.value " + e.target.value,
-                "currentRadioValue  " + currentRadioValue
-            );
-        } else {
-            console.log(
-                "no",
-                "e.target.value " + e.target.value,
-                "currentRadioValue  " + currentRadioValue
-            );
-            setCurrentRadioValue(e.target.value);
-        }
-    };
-
-
-    function offRadio(value: string) {
-        if (value === currentRadioValue) {
-            setCurrentRadioValue("");
-        }
-    }
-
-    // checkted
+    const [open, setOpen] = useState(false)
+    const [valueinputSearch, setvalueinputSearch] = useState("")
+    const [finalSearchItme, setvlueFinalSearchitme] = useState([])
 
     useEffect(() => {
-        console.log(inputCheckboxValue)
-    }, [inputCheckboxValue])
+        if (valueinputSearch) {
+            let item = []
+            let valueSearch = myArray.map((i) => {
+                item.push(i.lastIndexOf(valueinputSearch))
+            })
 
-    let myArray = [1, 2, 3]; // 1 + 2 + 3
+            setvalueinputSearch((prev) => {
+                return [...prev, item]
+            })
+
+        }
+    }, [valueinputSearch])
+
 
     return (
-        <div>
-            <div>
+        <div className="p-3">
+            <div className="w-1/2 bg-gray-200 relative object-bottom">
                 <input
-                    id="radio-item-1"
-                    name="radio-item-1"
-                    type="radio"
-                    value="radio-1"
-                    onClick={(e) => offRadio(e.target.value)
-                    }
-                    onChange={handleRadioChange}
-                    checked={currentRadioValue === "radio-1"}
+                    type="text"
+                    className="border w-full"
+                    onFocus={() => setOpen(true)}
+                    onBlur={() => setOpen(false)}
+                    value={valueinputSearch}
+                    onChange={(e) => setvalueinputSearch(e.target.value)}
                 />
-                < label htmlFor="radio-item-1" > Radio Item 1 </label>
-            </div>
-            < div >
-                <input
-                    id="radio-item-2"
-                    name="radio-item-2"
-                    type="radio"
-                    value="radio-2"
-                    onClick={(e) => offRadio(e.target.value)}
-                    onChange={handleRadioChange}
-                    checked={currentRadioValue === "radio-2"}
-                />
-                < label htmlFor="radio-item-2" > Radio Item 1 </label>
-            </div>
-
-            {/* checked */}
-
-            {Array.isArray(myArray) && myArray.length > 0 && myArray.map(itme => (
-                <input type="checkbox" value={itme} onChange={(e) => {
-                    if (e.target.value !== null) {
-
-                        if (e.target.value === inputCheckboxValue.find(i => i === e.target.value)) {
-                            setInCheckBoxValue(() => {
-                                return inputCheckboxValue.filter(i => i !== e.target.value)
-                            })
-                        } else {
-                            setInCheckBoxValue((prev) => {
-                                let newVlaue = e.target.value
-                                return [...prev, newVlaue]
-                            })
-                        }
-
+                <div className="absolute top-full  h-40 overflow-auto bg-red-200 w-full">
+                    {
+                        open && <li>{finalSearchItme}</li>
                     }
-                }} />
-            ))}
-
-            <h1 className="text-3xl text-blue-500">
-                {inputCheckboxValue !== null && inputCheckboxValue.reduce((accumulator, current) => Number(accumulator) + Number(current), 0)}
-            </h1>
+                </div>
+            </div>
         </div>
-    );
-}
-
-export default App;
+    )
+} 
