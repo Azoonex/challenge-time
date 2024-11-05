@@ -93,3 +93,61 @@ function App() {
 }
 
 export default App
+
+// function ButtonClick({ onclick }) {
+//     return <button onClick={onclick}>click</button>;
+// }
+
+// export default function App() {
+//     const [count, setCount] = useState(0);
+//     const handleClick = useCallback(() => {
+//         setCount(count + 1);
+//     }, []);
+
+//     return (
+//         <div>
+//             <h1>count = {count}</h1>
+//             <ButtonClick onclick={handleClick} />
+//         </div>
+//     );
+// }
+
+// import { useRef } from "react";
+// import { useState } from "react";
+
+// export default function App() {
+//     const [startGame, setStartGame] = useState(false);
+//     const [guessValue, setGuessValue] = useState("");
+//     const [EndGame, setEndGame] = useState("pendding");
+
+//     function handleClick() {
+//         setStartGame((prev) => !prev);
+//         setGuessValue(prompt("guessValue"));
+//         const mathRadndomId = Math.random() * 20;
+//         if (mathRadndomId && mathRadndomId.toFixed() === valueInput) {
+//             setStartGame(false);
+//             setEndGame((prev) => (prev = "win"));
+//         }
+//     }
+
+//     return (
+//         <div className='p-3'>
+//             <button
+//                 className='bg-zinc-400 px-2 py-1 rounded-lg hover:bg-zinc-300'
+//                 onClick={handleClick}>
+//                 START GAME
+//             </button>
+//             {EndGame && EndGame === "pendding" ? undefined : EndGame ===
+//               "win" ? (
+//                 <span className='bg-black size-40 rounded-md text-5xl text-yellow-500'>
+//                     you win
+//                 </span>
+//             ) : (
+//                 <span className='bg-white size-40 rounded-md text-5xl text-red-500'>
+//                     you lose
+//                 </span>
+//             )}
+//         </div>
+//     );
+// }
+
