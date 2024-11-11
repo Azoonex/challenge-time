@@ -1,16 +1,12 @@
-import React, {
-    forwardRef,
-    MutableRefObject,
-    useImperativeHandle,
-    useRef,
-    useState,
-} from "react";
+import React, { useState } from "react";
+
+type dataType = {
+    id: number;
+    title: string;
+}[];
 
 interface TypeChildCompotnt {
-    data: {
-        id: number;
-        title: string;
-    }[];
+    data: dataType;
     selectedId: number | null;
     handleSelected: (id: number) => void;
 }
@@ -52,18 +48,32 @@ export default function App() {
 }
 
 const ChildComponent: React.FC<TypeChildCompotnt> = (props) => {
-    const { data, handleSelected } = props;
+    const { data, handleSelected, selectedId } = props;
+
+    let findeTabs = data.find((item) => item.id === selectedId);
 
     return (
         <div className='flex gap-2'>
-            {data.map((i) => (
-                <button
-                    className={`px-2 py-1 bg-blue-300 rounded-md`}
-                    key={i.id}
-                    onClick={() => handleSelected(i.id)}>
-                    {i.title}
-                </button>
-            ))}
+            <div>
+                {data.map((i) => (
+                    <div>
+                        <button
+                            className={`px-2 py-1 bg-blue-300 rounded-md`}
+                            key={i.id}
+                            onClick={() => handleSelected(i.id)}>
+                            {i.title}
+                        </button>
+                    </div>
+                ))}
+                <Child_one>
+                    {findeTabs?.id}
+                    {findeTabs?.title}
+                </Child_one>
+            </div>
         </div>
     );
 };
+
+function Child_one({ children }: { children: React.ReactNode }) {
+    return <div>{children}</div>;
+}
