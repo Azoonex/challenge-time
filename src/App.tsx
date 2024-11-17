@@ -1,79 +1,78 @@
-import React, { useState } from "react";
+// import React, { useReducer } from "react";
 
-type dataType = {
-    id: number;
-    title: string;
-}[];
+// const initialState = { count: 0 };
 
-interface TypeChildCompotnt {
-    data: dataType;
-    selectedId: number | null;
-    handleSelected: (id: number) => void;
+// function reducer(state, action) {
+//     switch (action.type) {
+//         case "increment":
+//             return { count: state.count + 1 };
+//         case "decrement":
+//             return { count: state.count - 1 };
+//         default:
+//             return state;
+//     }
+// }
+
+// function Counter() {
+//     const [state, dispatch] = useReducer(reducer, initialState);
+
+//     return (
+//         <div>
+//             <p>Count: {state.count}</p>
+//             <button onClick={() => dispatch({ type: "increment" })}>+</button>
+//             <button onClick={() => dispatch({ type: "decrement" })}>-</button>
+//         </div>
+//     );
+// }
+
+import React, { useLayoutEffect, useRef } from "react";
+
+function Box() {
+    const boxRef = useRef();
+
+    useLayoutEffect(() => {
+        console.log("Box size:", boxRef.current.getBoundingClientRect());
+    });
+
+    return (
+        <div
+            ref={boxRef}
+            style={{ width: 100, height: 100, background: "red" }}
+        />
+    );
 }
 
-export default function App() {
-    const [selectedId, setSelectedId] = useState<number | null>(null);
+import React, { useState, useTransition } from "react";
 
-    function handleSelected(id: number) {
-        if (id) {
-            setSelectedId(id);
-        }
-    }
+function App() {
+    const [isPending, startTransition] = useTransition();
+    const [count, setCount] = useState(0);
 
-    const data = [
-        {
-            id: 1,
-            title: "react",
-        },
-        {
-            id: 2,
-            title: "javascirpt",
-        },
-        {
-            id: 3,
-            title: "vue js",
-        },
-    ];
+    const handleClick = () => {
+        startTransition(() => {
+            setCount((prev) => prev + 1);
+        });
+    };
 
     return (
         <div>
-            <ChildComponent
-                data={data}
-                selectedId={selectedId}
-                handleSelected={handleSelected}
-            />
-            {selectedId}
+            <p>Count: {count}</p>
+            <button onClick={handleClick}>Increment</button>
+            {isPending && <p>Loading...</p>}
         </div>
     );
 }
 
-const ChildComponent: React.FC<TypeChildCompotnt> = (props) => {
-    const { data, handleSelected, selectedId } = props;
+import React, { useState, useDeferredValue } from "react";
 
-    let findeTabs = data.find((item) => item.id === selectedId);
+function App() {
+    const [text, setText] = useState("");
+    const deferredText = useDeferredValue(text);
 
     return (
-        <div className='flex gap-2'>
-            <div>
-                {data.map((i) => (
-                    <div>
-                        <button
-                            className={`px-2 py-1 bg-blue-300 rounded-md`}
-                            key={i.id}
-                            onClick={() => handleSelected(i.id)}>
-                            {i.title}
-                        </button>
-                    </div>
-                ))}
-                <Child_one>
-                    {findeTabs?.id}
-                    {findeTabs?.title}
-                </Child_one>
-            </div>
+        <div>
+            <input value={text} onChange={(e) => setText(e.target.value)} />
+            <p>Deferred: {deferredText}</p>
         </div>
     );
-};
-
-function Child_one({ children }: { children: React.ReactNode }) {
-    return <div>{children}</div>;
 }
